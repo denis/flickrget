@@ -1,4 +1,4 @@
 TODO:
-Fix LICENSE with your name
-Fix Rakefile with your name and contact info
-Add your code to lib/<%= name %>.rb
+[x] Fix LICENSE with your name
+[x] Fix Rakefile with your name and contact info
+[x] Add your code to lib/flickrget.rb
