@@ -10,35 +10,36 @@ rescue LoadError
 end
 
 require 'optparse'
-
-# NOTE: the option -p/--path= is given as an example, and should probably be replaced in your application.
+require 'flickrget'
 
 OPTIONS = {
-  :path     => '~'
+  :type => 'people'
 }
-MANDATORY_OPTIONS = %w(  )
+
+AVALIABLE_TYPES = %w(people photosets favorites)
 
 parser = OptionParser.new do |opts|
-  opts.banner = <<BANNER
-This application is wonderful because...
+  opts.banner = <<-BANNER
+    Download photos from Flickr
 
-Usage: #{File.basename($0)} [options]
+    Usage: #{File.basename($0)} [options] id ...
 
-Options are:
-BANNER
+    Options are:
+  BANNER
+
   opts.separator ""
-  opts.on("-p", "--path=PATH", String,
-          "The root path for selecting files",
-          "Default: ~") { |OPTIONS[:path]| }
-  opts.on("-h", "--help",
-          "Show this help message.") { puts opts; exit }
+
+  opts.on('-p', '--people',    'Public photos for the given people (default)') { OPTIONS[:type] = 'people' }
+  opts.on('-s', '--photosets', 'Photos in the given sets') { OPTIONS[:type] = 'photosets' }
+  opts.on('-f', '--favorites', 'Favorite public photos for the given users') { OPTIONS[:type] = 'favorites' }
+
+  opts.on('-h', '--help', 'Show this help message') { puts opts; exit }
+
   opts.parse!(ARGV)
 
-  if MANDATORY_OPTIONS && MANDATORY_OPTIONS.find { |option| OPTIONS[option.to_sym].nil? }
+  if ARGV.size < 1
     puts opts; exit
   end
 end
 
-path = OPTIONS[:path]
-
-# do stuff
+Flickrget.download_all(OPTIONS[:type], ARGV)
