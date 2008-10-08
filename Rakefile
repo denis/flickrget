@@ -5,7 +5,7 @@ require 'date'
 require 'spec/rake/spectask'
 
 GEM = "flickrget"
-GEM_VERSION = "0.0.1"
+GEM_VERSION = "0.0.2"
 AUTHOR = "Denis Barushev"
 EMAIL = "barushev@gmail.com"
 HOMEPAGE = "http://github.com/denis/flickrget"
